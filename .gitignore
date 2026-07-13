@@ -66,3 +66,9 @@ client/cmd/verifymm/verifymm
 *.db
 evmrelay/cmd/evmrelay/evmrelay
 bisonw
+*.~*
+*test*
+.understand-anything/
+.kilocode/
+docs/maintainer-wiki
+docs/*/*.md
