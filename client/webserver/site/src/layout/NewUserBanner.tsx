@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '../stores/useAuthStore'
 import { fetchLocal, storeLocal, newUserBannerDismissedLK } from '../services/state'
 
-// NewUserBanner is the "New to Bison Wallet?" banner shown across the top
+// NewUserBanner is the new-user banner shown across the top
 // of the app for first-time users. Mirrors vanilla `app().showNewUserBanner()`
 // (app.ts L334-346) and the `#newUserBanner` markup in `bodybuilder.tmpl`.
 //

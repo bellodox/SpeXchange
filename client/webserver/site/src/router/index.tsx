@@ -16,18 +16,13 @@ function IndexRedirect () {
 const LoginPage = lazy(() => import('../pages/LoginPage'))
 const InitPage = lazy(() => import('../pages/InitPage'))
 const MarketsPage = lazy(() => import('../pages/markets'))
+const CreateOfferPage = lazy(() => import('../pages/CreateOfferPage'))
+const MyOffersPage = lazy(() => import('../pages/MyOffersPage'))
+const ActiveSwapsPage = lazy(() => import('../pages/ActiveSwapsPage'))
 const WalletsPage = lazy(() => import('../pages/WalletsPage'))
 const WalletTransactionsPage = lazy(() => import('../pages/WalletTransactionsPage'))
-const OrdersPage = lazy(() => import('../pages/OrdersPage'))
-const OrderPage = lazy(() => import('../pages/OrderPage'))
+const HistoryPage = lazy(() => import('../pages/HistoryPage'))
 const SettingsPage = lazy(() => import('../pages/SettingsPage'))
-const DexSettingsPage = lazy(() => import('../pages/DexSettingsPage'))
-const MMPage = lazy(() => import('../pages/MMPage'))
-const MMSettingsPage = lazy(() => import('../pages/MMSettingsPage'))
-const MMArchivesPage = lazy(() => import('../pages/MMArchivesPage'))
-const MMLogsPage = lazy(() => import('../pages/MMLogsPage'))
-const ProposalsPage = lazy(() => import('../pages/ProposalsPage'))
-const ProposalPage = lazy(() => import('../pages/ProposalPage'))
 
 function PageSuspense ({ children }: { children: React.ReactNode }) {
   return <Suspense fallback={<div className="flex-center p-5">Loading...</div>}>{children}</Suspense>
@@ -49,19 +44,14 @@ export const router = createBrowserRouter([
           { path: ROUTES.WALLETS, element: <PageSuspense><WalletsPage /></PageSuspense> },
           { path: ROUTES.WALLET_TRANSACTIONS, element: <PageSuspense><WalletTransactionsPage /></PageSuspense> },
           { path: ROUTES.SETTINGS, element: <PageSuspense><SettingsPage /></PageSuspense> },
-          { path: ROUTES.PROPOSALS, element: <PageSuspense><ProposalsPage /></PageSuspense> },
-          { path: ROUTES.PROPOSAL, element: <PageSuspense><ProposalPage /></PageSuspense> },
+          { path: ROUTES.CREATE_OFFER, element: <PageSuspense><CreateOfferPage /></PageSuspense> },
+          { path: ROUTES.MY_OFFERS, element: <PageSuspense><MyOffersPage /></PageSuspense> },
+          { path: ROUTES.ACTIVE_SWAPS, element: <PageSuspense><ActiveSwapsPage /></PageSuspense> },
+          { path: ROUTES.HISTORY, element: <PageSuspense><HistoryPage /></PageSuspense> },
           {
             element: <DexConnectionGuard />,
             children: [
               { path: ROUTES.MARKETS, element: <PageSuspense><MarketsPage /></PageSuspense> },
-              { path: ROUTES.ORDERS, element: <PageSuspense><OrdersPage /></PageSuspense> },
-              { path: ROUTES.ORDER, element: <PageSuspense><OrderPage /></PageSuspense> },
-              { path: ROUTES.MM, element: <PageSuspense><MMPage /></PageSuspense> },
-              { path: ROUTES.MM_SETTINGS, element: <PageSuspense><MMSettingsPage /></PageSuspense> },
-              { path: ROUTES.MM_ARCHIVES, element: <PageSuspense><MMArchivesPage /></PageSuspense> },
-              { path: ROUTES.MM_LOGS, element: <PageSuspense><MMLogsPage /></PageSuspense> },
-              { path: ROUTES.DEX_SETTINGS, element: <PageSuspense><DexSettingsPage /></PageSuspense> },
             ],
           },
         ],

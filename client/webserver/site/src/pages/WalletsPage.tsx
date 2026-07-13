@@ -37,7 +37,7 @@ import type {
   CoreNote, TicketStakingStatus, VotingServiceProvider,
   Exchange, Spot,
   WalletPeer, WalletRestoration,
-  ProposalsMeta, Ticket,
+  Ticket,
   TransactionNote, WalletNote
 } from '../stores/types'
 import { PeerSource, ApprovalStatus, DCRAssetID } from '../stores/types'
@@ -2405,7 +2405,7 @@ function RecentOrdersView ({ assetID, assets }: {
             proper link semantics, supports cmd-click / middle-click
             for new-tab, and reads as a link to assistive tech. */}
         <Link
-          to={`${ROUTES.ORDERS}?assets=${assetID}`}
+          to={ROUTES.HISTORY}
           className="fs16 text-end"
         >
           {t('VIEW_ALL')}
@@ -3512,10 +3512,6 @@ function StakingView ({ assetID, assets }: {
   const wallet = asset?.wallet
 
   const [stakeStatus, setStakeStatus] = useState<TicketStakingStatus | null>(null)
-  // WP-12: proposalsMeta is included in the /api/stakestatus response
-  // (vanilla `wallets.ts` L1361-1364). The voting modal renders the
-  // in-progress proposals list from this state.
-  const [proposalsMeta, setProposalsMeta] = useState<ProposalsMeta | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -3545,9 +3541,6 @@ function StakingView ({ assetID, assets }: {
       return
     }
     setStakeStatus(res.status as TicketStakingStatus)
-    // WP-12: proposalsMeta ships in the same response. Vanilla reads
-    // it as `res.proposalsMeta` (L1362).
-    setProposalsMeta((res.proposalsMeta as ProposalsMeta) ?? null)
   }, [assetID])
 
   useEffect(() => {
@@ -3830,14 +3823,13 @@ function StakingView ({ assetID, assets }: {
     <FormOverlay bare show={showVoting} onClose={() => setShowVoting(false)}>
       <div className="bg-body border rounded p-4" style={{ minWidth: 520, maxWidth: 720, maxHeight: '85vh', overflowY: 'auto' }}>
         {stakeStatus && (
-          <SetVotesModal
-            assetID={assetID}
-            stakeStatus={stakeStatus}
-            setStakeStatus={setStakeStatus}
-            proposalsMeta={proposalsMeta}
-            ui={ui}
-            onClose={() => setShowVoting(false)}
-          />
+            <SetVotesModal
+              assetID={assetID}
+              stakeStatus={stakeStatus}
+              setStakeStatus={setStakeStatus}
+              ui={ui}
+              onClose={() => setShowVoting(false)}
+            />
         )}
       </div>
     </FormOverlay>
@@ -4047,12 +4039,11 @@ function TicketHistoryModal ({ assetID, stakeStatus, ui, onClose }: {
 // optimistically update the local stakeStatus so the radios reflect
 // the new selection without waiting for a refetch.
 function SetVotesModal ({
-  assetID, stakeStatus, setStakeStatus, proposalsMeta, ui, onClose
+  assetID, stakeStatus, setStakeStatus, ui, onClose
 }: {
   assetID: number
   stakeStatus: TicketStakingStatus
   setStakeStatus: React.Dispatch<React.SetStateAction<TicketStakingStatus | null>>
-  proposalsMeta: ProposalsMeta | null
   ui: UnitInfo
   onClose: () => void
 }) {
@@ -4134,8 +4125,6 @@ function SetVotesModal ({
       }
     })
   }, [postVotes, setStakeStatus])
-
-  const proposals = proposalsMeta?.proposalsInProgress ?? []
 
   return (
     <div>
@@ -4262,48 +4251,6 @@ function SetVotesModal ({
                   onChange={() => setTreasuryPolicy(keyPolicy.key, 'yes')}
                 />
               </label>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* PROPOSALS IN-PROGRESS */}
-      <div className="d-flex justify-content-between align-items-center mt-3">
-        <div className="fs22">{t('PROPOSALS')}</div>
-        <Link
-          to={ROUTES.PROPOSALS}
-          className="fs15 hoverbg pointer ico-open justify-content-end"
-        >
-          {' '}{t('VIEW_ALL')}
-        </Link>
-      </div>
-      {proposals.length === 0 && (
-        <div className="text-center py-2 grey">{t('NO_PROPOSALS_IN_PROGRESS')}</div>
-      )}
-      <div className="flex-stretch-column">
-        {proposals.map(proposal => (
-          <div key={proposal.token} className="py-3 border-bottom">
-            <div className="d-flex justify-content-between align-items-center">
-              <h6 className="pb-0 mb-0">{proposal.name}</h6>
-              {/* Vanilla `loadProposal` (L2905) embeds the proposal
-                  page inside the voting form; the React rewrite
-                  navigates to the standalone proposal page instead
-                  since we already have ProposalPage as a route.
-                  Using <Link> (vs. <a onClick={navigate}>) for the
-                  same reasons documented in B-L13-CLEANUP -- proper
-                  link semantics, supports cmd-click / middle-click,
-                  matches the existing convention in Header.tsx. */}
-              <Link
-                to={`/proposal/${proposal.token}?assetID=${assetID}`}
-                className="fs15 pt-1 hoverbg pointer ico-open justify-content-end"
-                onClick={onClose}
-                aria-label={`View proposal: ${proposal.name}`}
-              ></Link>
-            </div>
-            <div>
-              <small className="text-muted">
-                {proposal.username} - {t('VERSION')} {proposal.version} - {proposal.voteStatus.toLowerCase()}
-              </small>
             </div>
           </div>
         ))}

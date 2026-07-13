@@ -55,8 +55,10 @@ header#header {
   height: 55px;
   margin-left: auto;
   padding-right: 0.5rem;
-  font-size: 18px;
+  font-size: 16px;
   white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .header-btn {
@@ -182,7 +184,7 @@ div.note-indicator {
 }
 
 span.brand::before {
-  content: "Bison Wallet";
+  content: "SpeXchange";
 }
 
 img.dex-logo {
@@ -231,8 +233,27 @@ body.dex-branding {
   }
 
   span.brand::before {
-    content: "DCRDEX";
+    content: "SpeXchange";
   }
+}
+
+.spexchange-skeleton-page {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.spexchange-skeleton-card {
+  max-width: 860px;
+}
+
+.spexchange-scope-pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  color: var(--text-color-secondary);
+  background-color: var(--tertiary-bg);
 }
 
 #noteIndicator {

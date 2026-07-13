@@ -688,7 +688,7 @@ export default function SettingsPage () {
       {/* -- Order history -- */}
       <div className="mb-4">
         <h5>{t('ORDER_HISTORY')}</h5>
-        <button className="btn btn-outline-secondary" onClick={() => navigate(ROUTES.ORDERS)}>
+        <button className="btn btn-outline-secondary" onClick={() => navigate(ROUTES.HISTORY)}>
           {t('VIEW')}
         </button>
       </div>

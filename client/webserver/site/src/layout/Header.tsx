@@ -13,6 +13,15 @@ export function Header () {
   const exchanges = useAuthStore(s => s.exchanges)
   const hasConnection = Object.keys(exchanges).length > 0
 
+  const navItems = [
+    { path: ROUTES.MARKETS, label: t('Market'), visible: authed && hasConnection },
+    { path: ROUTES.CREATE_OFFER, label: t('CREATE_OFFER'), visible: authed },
+    { path: ROUTES.MY_OFFERS, label: t('MY_OFFERS'), visible: authed },
+    { path: ROUTES.ACTIVE_SWAPS, label: t('ACTIVE_SWAPS'), visible: authed },
+    { path: ROUTES.WALLETS, label: t('WALLETS'), visible: authed },
+    { path: ROUTES.HISTORY, label: t('HISTORY'), visible: authed },
+  ]
+
   const go = useCallback((to: string) => () => {
     startTransition(() => { navigate(to) })
   }, [navigate])
@@ -28,30 +37,15 @@ export function Header () {
       <div id="headerSlot" />
 
       <nav className="header-nav">
-        {authed && (
+        {navItems.filter(item => item.visible).map(item => (
           <div
-            className={`header-btn demi${isActive(ROUTES.WALLETS) ? ' active' : ''}`}
-            onClick={go(ROUTES.WALLETS)}
+            key={item.path}
+            className={`header-btn demi${isActive(item.path) ? ' active' : ''}`}
+            onClick={go(item.path)}
           >
-            {t('Wallet')}
+            {item.label}
           </div>
-        )}
-        {authed && hasConnection && (
-          <div
-            className={`header-btn demi${isActive(ROUTES.MARKETS) ? ' active' : ''}`}
-            onClick={go(ROUTES.MARKETS)}
-          >
-            {t('Trade')}
-          </div>
-        )}
-        {authed && hasConnection && (
-          <div
-            className={`header-btn${isActive(ROUTES.MM) ? ' active' : ''}`}
-            onClick={go(ROUTES.MM)}
-          >
-            <span className="ico-robot fs32 lh1" />
-          </div>
-        )}
+        ))}
         <NotificationBell />
         <div
           className={`header-btn${burgerActive ? ' active' : ''}`}

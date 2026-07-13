@@ -79,7 +79,7 @@ export function VerifyOrderForm ({
   // The `order_disclaimer` i18n key contains `<span class="red">IMPORTANT</span>`
   // presentational HTML, so we need `dangerouslySetInnerHTML`.
   const disclaimerHtml = t('ORDER_DISCLAIMER', {
-    brand: 'Bison Wallet',
+    brand: 'SpeXchange',
     baseTicker: buiUnit,
     quoteTicker: quiUnit,
   })

@@ -10,10 +10,10 @@ import { ROUTES } from '../router/routes'
 import type { SupportedAsset, WalletDefinition, UserResponse } from '../stores/types'
 import { logoPath } from '../hooks/useFormatters'
 
-// Symbols of the wallets we pre-check on the QuickConfig form. Picked to
-// match the most common starter set: native BTC, native DCR, native POL.
+// Symbols of the wallets we pre-check on the QuickConfig form. SpeXchange
+// v1 is scoped to native ROD and LTC.
 // Users can still uncheck or add more before submitting.
-const PRECHECKED_SYMBOLS = new Set(['btc', 'dcr', 'polygon'])
+const PRECHECKED_SYMBOLS = new Set(['rod', 'ltc'])
 
 type Step = 'password' | 'quickConfig' | 'seedBackup'
 
@@ -297,7 +297,7 @@ export default function InitPage () {
           </header>
 
           <div className="px-2">
-            <div className="fs18 py-3">{t('REG_SET_APP_PW_MSG', { brand: 'Bison Wallet' })}</div>
+            <div className="fs18 py-3">{t('REG_SET_APP_PW_MSG', { brand: 'SpeXchange' })}</div>
 
             <div className="mt-3 border-top pt-3">
               <label htmlFor="appPW">{t('Password')}</label>

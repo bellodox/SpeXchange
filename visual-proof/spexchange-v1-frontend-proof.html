@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SpeXchange v1 frontend visual proof</title>
+  <!-- Requires a fresh frontend build from [`client/webserver/site/package.json`](../client/webserver/site/package.json) because this proof page links to the gitignored [`client/webserver/site/dist/style.css`](../client/webserver/site/dist/style.css). -->
+  <link rel="stylesheet" href="../client/webserver/site/dist/style.css">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #0d1117;
+    }
+
+    .proof-brand {
+      align-items: center;
+      color: #f8fafc;
+      display: flex;
+      font-size: 1.15rem;
+      font-weight: 700;
+      gap: 0.75rem;
+      min-height: 55px;
+      padding: 0 1rem;
+      white-space: nowrap;
+    }
+
+    .proof-mark {
+      align-items: center;
+      background: linear-gradient(135deg, #1e88e5, #7c3aed);
+      border-radius: 999px;
+      display: inline-flex;
+      height: 2rem;
+      justify-content: center;
+      width: 2rem;
+    }
+
+    .proof-shell {
+      min-height: calc(100vh - 55px);
+    }
+  </style>
+</head>
+<body class="dark">
+  <header id="header">
+    <div id="headerSlot">
+      <div class="proof-brand"><span class="proof-mark">S</span> SpeXchange</div>
+    </div>
+    <nav class="header-nav" aria-label="SpeXchange primary navigation">
+      <div class="header-btn demi active">Market</div>
+      <div class="header-btn demi">Create Offer</div>
+      <div class="header-btn demi">My Offers</div>
+      <div class="header-btn demi">Active Swaps</div>
+      <div class="header-btn demi">Wallets</div>
+      <div class="header-btn demi">History</div>
+    </nav>
+  </header>
+  <main id="main" class="proof-shell flex-grow-1 position-relative d-flex flex-column">
+    <div class="spexchange-skeleton-page p-3" id="create-offer-proof">
+      <section class="spexchange-skeleton-card mx-auto p-4">
+        <div class="spexchange-scope-pill fs14 mb-3">SpeXchange v1 scope: ROD/LTC only</div>
+        <h1 class="mb-3">Create Offer</h1>
+        <p class="fs18 mb-3">Create Offer is a frontend-only SpeXchange v1 placeholder for composing ROD/LTC swap offers.</p>
+        <p class="fs16 grey mb-0">Next backend-backed milestone: ROD DB-backed offer discovery and swap protocol wiring.</p>
+      </section>
+    </div>
+    <div class="spexchange-skeleton-page p-3" id="active-swaps-proof">
+      <section class="spexchange-skeleton-card mx-auto p-4">
+        <div class="spexchange-scope-pill fs14 mb-3">SpeXchange v1 scope: ROD/LTC only</div>
+        <h1 class="mb-3">Active Swaps</h1>
+        <p class="fs18 mb-3">Active Swaps will track in-progress ROD/LTC swaps after the local daemon and ROD DB workflow are implemented.</p>
+        <p class="fs16 grey mb-0">Next backend-backed milestone: ROD DB-backed offer discovery and swap protocol wiring.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

@@ -41,6 +41,10 @@ const args = new Set(process.argv.slice(2))
 const listDynamic = args.has('--list-dynamic')
 const printOrphans = args.has('--print-orphans')
 
+function toPosixPath (p) {
+  return p.replaceAll('\\', '/')
+}
+
 // --- load inputs ---
 /** @type {Record<string,string>} */
 const json = JSON.parse(readFileSync(jsonPath, 'utf8'))
@@ -161,7 +165,7 @@ for (const file of sourceFiles) {
   // look like real call sites. Line numbers/offsets stay stable.
   const text = stripComments(raw)
   const lines = raw.split('\n') // keep raw for the dynamic-site sample display
-  const rel = relative(siteRoot, file)
+  const rel = toPosixPath(relative(siteRoot, file))
 
   // Build a cumulative offset -> line-number lookup for regex match positions.
   /** offset of each line's first char */
